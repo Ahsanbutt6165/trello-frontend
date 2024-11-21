@@ -11,6 +11,7 @@ import { useAppDispatch } from "../../../feautures/store/store";
 import Profile from "./profile/Page";
 import { logout } from "../../../feautures/authslice/AuthSlice";
 import { setSelectedBoard } from "../../../feautures/boardsSlice/BoardSlice";
+import { BACKEND_API } from "../../../constants";
 
 const Header = ({ user }: any) => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,9 @@ const Header = ({ user }: any) => {
   const navigate = useNavigate();
   const logoutHandler = async () => {
     try {
-      await axios.get("/api/user/logout");
+      await axios.get(`${BACKEND_API}/api/user/logout`, {
+        withCredentials: true,
+      });
       dispatch(logout());
       dispatch(setSelectedBoard(null));
       navigate("/login");

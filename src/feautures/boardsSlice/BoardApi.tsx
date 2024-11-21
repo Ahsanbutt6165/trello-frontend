@@ -2,12 +2,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BoardState } from "../../types";
+import { BACKEND_API } from "../../constants";
 
 export const fetchBoards = createAsyncThunk(
   "boards/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get("/api/board/allboards");
+      const { data } = await axios.get(`${BACKEND_API}/api/board/allboards`, {
+        withCredentials: true,
+      });
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data);
@@ -27,7 +30,11 @@ export const createBoard = createAsyncThunk(
         toast.error("Enter title");
         return rejectWithValue("Title is required");
       }
-      const { data } = await axios.post("/api/board/createboard", { title });
+      const { data } = await axios.post(
+        `${BACKEND_API}/api/board/createboard`,
+        { title },
+        { withCredentials: true }
+      );
       toast.success("Board created successfully");
       return data;
     } catch (error: any) {
@@ -40,7 +47,10 @@ export const fetchSingleBoard = createAsyncThunk(
   "boards/fetchSingleBoard",
   async (boardId: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/board/singleboard/${boardId}`);
+      const { data } = await axios.get(
+        `${BACKEND_API}/api/board/singleboard/${boardId}`,
+        { withCredentials: true }
+      );
       return data;
     } catch (error: any) {
       toast.error(error.message);
@@ -52,7 +62,9 @@ export const deleteBoard = createAsyncThunk(
   "boards/deleteBoard",
   async (boardId: string, { dispatch, rejectWithValue }) => {
     try {
-      await axios.delete(`/api/board/boards/${boardId}`);
+      await axios.delete(`${BACKEND_API}/api/board/boards/${boardId}`, {
+        withCredentials: true,
+      });
       dispatch(fetchBoards()); // Refetch boards to update the list
       toast.success("Board deleted successfully");
       return boardId;
@@ -73,7 +85,11 @@ export const updateBoard = createAsyncThunk(
       return rejectWithValue("Title is required");
     }
     try {
-      await axios.put(`/api/board/boards/${boardId}`, { title });
+      await axios.put(
+        `${BACKEND_API}/api/board/boards/${boardId}`,
+        { title },
+        { withCredentials: true }
+      );
       dispatch(fetchBoards());
       toast.success("Board updated successfully");
       return { boardId, title };
@@ -95,8 +111,9 @@ export const addList = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.post(
-        `/api/tasks/boards/${boardId}/addtask`,
-        { title, description }
+        `${BACKEND_API}/api/tasks/boards/${boardId}/addtask`,
+        { title, description },
+        { withCredentials: true }
       );
       return data;
     } catch (error: any) {
@@ -112,7 +129,8 @@ export const deleteList = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.delete(
-        `/api/tasks//boards/${boardId}/lists/${listId}`
+        `${BACKEND_API}/api/tasks//boards/${boardId}/lists/${listId}`,
+        { withCredentials: true }
       );
       return data;
     } catch (error: any) {
@@ -133,8 +151,9 @@ export const addCard = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.post(
-        `/api/card/boards/${boardId}/lists/${listId}/cards`,
-        { title, description }
+        `${BACKEND_API}/api/card/boards/${boardId}/lists/${listId}/cards`,
+        { title, description },
+        { withCredentials: true }
       );
       return { boardId, listId, card: data };
     } catch (error: any) {
@@ -154,7 +173,8 @@ export const deleteCard = createAsyncThunk(
   ) => {
     try {
       await axios.delete(
-        `/api/card/boards/${boardId}/lists/${listId}/cards/${cardId}`
+        `${BACKEND_API}/api/card/boards/${boardId}/lists/${listId}/cards/${cardId}`,
+        { withCredentials: true }
       );
 
       return { boardId, listId, cardId };

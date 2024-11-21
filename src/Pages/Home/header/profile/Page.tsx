@@ -2,13 +2,16 @@ import axios from "axios";
 
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { BACKEND_API } from "../../../../constants";
 
 const Profile = ({ user }: any) => {
   const [totalBoards, setTotalBoards] = useState(0);
 
   async function totalCount() {
     try {
-      const { data } = await axios.get("/api/board/totalboards");
+      const { data } = await axios.get(`${BACKEND_API}/api/board/totalboards`, {
+        withCredentials: true,
+      });
       setTotalBoards(data.total);
     } catch (error: any) {
       toast.error(error);
