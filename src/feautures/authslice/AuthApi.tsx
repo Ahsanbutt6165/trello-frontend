@@ -7,8 +7,9 @@ export const registerUser = createAsyncThunk(
   "registerUser",
   async ({ name, email, password }: RegisterUser, { rejectWithValue }) => {
     try {
+      const apiUrl = `http://13.202.95.84:3000/api/user/register`;
       const res = await axios.post(
-        `${BACKEND_API}/api/user/register`,
+        apiUrl,
         {
           name,
           email,
