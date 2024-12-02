@@ -4,11 +4,12 @@ import { LoadingAnimation } from "../../components/Loading";
 import { useAppDispatch, useAppSelector } from "../../feautures/store/store";
 import toast from "react-hot-toast";
 import { LOGIN_ROUTE } from "../../constants";
-import { registerUser } from "../../feautures/authslice/AuthApi";
+
 import {
   selectAuthError,
   selectBtnLoading,
 } from "../../feautures/authslice/AuthSelectors";
+import { registerUser } from "../../feautures/authslice/AuthApi";
 
 const Register = () => {
   const [email, setEmail] = useState("");

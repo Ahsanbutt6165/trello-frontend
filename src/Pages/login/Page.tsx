@@ -11,11 +11,12 @@ import {
 import toast from "react-hot-toast";
 
 import { HOME_ROUTE, SIGNUP_ROUTE } from "../../constants.ts";
-import { loginUser } from "../../feautures/authslice/AuthApi.tsx";
+
 import {
   selectAuthError,
   selectBtnLoading,
 } from "../../feautures/authslice/AuthSelectors.tsx";
+import { loginUser } from "../../feautures/authslice/AuthApi.tsx";
 
 const Login = () => {
   const btnLoading = useAppSelector(selectBtnLoading);

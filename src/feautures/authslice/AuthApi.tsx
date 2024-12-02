@@ -7,16 +7,11 @@ export const registerUser = createAsyncThunk(
   "registerUser",
   async ({ name, email, password }: RegisterUser, { rejectWithValue }) => {
     try {
-      const apiUrl = `http://13.202.95.84:3000/api/user/register`;
-      const res = await axios.post(
-        apiUrl,
-        {
-          name,
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const res = await axios.post(`${BACKEND_API}/api/user/register`, {
+        name,
+        email,
+        password,
+      });
 
       return res.data;
     } catch (error: any) {
@@ -28,14 +23,10 @@ export const loginUser = createAsyncThunk(
   "loginUser",
   async ({ email, password }: LoginPayload, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        `${BACKEND_API}/api/user/login`,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const res = await axios.post(`${BACKEND_API}/api/user/login`, {
+        email,
+        password,
+      });
 
       return res.data;
     } catch (error: any) {

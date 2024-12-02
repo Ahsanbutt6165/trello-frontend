@@ -8,9 +8,7 @@ export const fetchBoards = createAsyncThunk(
   "boards/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${BACKEND_API}/api/board/allboards`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`${BACKEND_API}/api/board/allboards`);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data);
