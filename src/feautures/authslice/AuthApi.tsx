@@ -23,10 +23,16 @@ export const loginUser = createAsyncThunk(
   "loginUser",
   async ({ email, password }: LoginPayload, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${BACKEND_API}/api/user/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${BACKEND_API}/api/user/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       return res.data;
     } catch (error: any) {
