@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
         `${BACKEND_API}/api/user/login`,
         {
           email,
-          password,
+          password, 
         },
         {
           withCredentials: true,
